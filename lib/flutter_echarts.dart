@@ -157,6 +157,7 @@ class _EchartsState extends State<Echarts> {
               _controller = webViewController;
             },
             onPageFinished: (String url) {
+              print(url);
               // --- FIX_BLINK ---
               if (Platform.isAndroid) {
                 setState(() {
@@ -167,6 +168,7 @@ class _EchartsState extends State<Echarts> {
               init();
             },
             onWebResourceError: (error) {
+              print(error.errorCode);
               if (error.errorType ==
                   WebResourceErrorType.webContentProcessTerminated) {
                 _controller.reload();
