@@ -152,6 +152,7 @@ class _EchartsState extends State<Echarts> {
         // --- FIX_BLINK ---
         child: WebView(
             initialUrl: htmlBase64,
+            initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
             javascriptMode: JavascriptMode.unrestricted,
             onWebViewCreated: (WebViewController webViewController) {
               print('hai');
