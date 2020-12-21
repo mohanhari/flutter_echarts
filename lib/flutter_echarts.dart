@@ -60,7 +60,8 @@ class _EchartsState extends State<Echarts> {
   String _currentOption;
 
   // --- FIX_BLINK ---
-  double _opacity = Platform.isAndroid ? 0.0 : 1.0;
+  // double _opacity = Platform.isAndroid ? 0.0 : 1.0;
+  double _opacity = 0.0;
   // --- FIX_BLINK ---
 
   @override
@@ -154,32 +155,19 @@ class _EchartsState extends State<Echarts> {
             initialUrl: htmlBase64,
             initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
             javascriptMode: JavascriptMode.unrestricted,
-            onWebViewCreated: (WebViewController webViewController) async {
+            onWebViewCreated: (WebViewController webViewController) {
               print('hai');
+              print(webViewController);
               _controller = webViewController;
-              final extensionsStr = this.widget.extensions.length > 0
-                  ? this.widget.extensions.reduce((value, element) =>
-                      (value ?? '') + '\n' + (element ?? ''))
-                  : '';
-              final themeStr = this.widget.theme != null
-                  ? '\'${this.widget.theme}\''
-                  : 'null';
-              await _controller.evaluateJavascript('''
-      $echartsScript
-      $extensionsStr
-      var chart = echarts.init(document.getElementById('chart'), $themeStr);
-      ${this.widget.extraScript}
-      chart.setOption($_currentOption, true);
-    ''');
             },
             onPageFinished: (String url) {
               print(url);
               // --- FIX_BLINK ---
-              if (Platform.isAndroid) {
-                setState(() {
-                  _opacity = 1.0;
-                });
-              }
+              // if (Platform.isAndroid) {
+              setState(() {
+                _opacity = 1.0;
+              });
+              // }
               // --- FIX_BLINK ---
               init();
             },
