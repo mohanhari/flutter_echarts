@@ -147,43 +147,46 @@ class _EchartsState extends State<Echarts> {
   @override
   Widget build(BuildContext context) {
     // --- FIX_BLINK ---
-    return Opacity(
-        opacity: _opacity,
-        // --- FIX_BLINK ---
-        child: WebView(
-            initialUrl: htmlBase64,
-            initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
-            javascriptMode: JavascriptMode.unrestricted,
-            onWebViewCreated: (WebViewController webViewController) {
-              print('hai');
-              print(webViewController);
-              _controller = webViewController;
-            },
-            onPageFinished: (String url) {
-              print(url);
-              // --- FIX_BLINK ---
-              if (Platform.isAndroid) {
-                setState(() {
-                  _opacity = 1.0;
-                });
-              }
-              // --- FIX_BLINK ---
-              init();
-            },
-            onWebResourceError: (error) {
-              print(error.errorCode);
-              if (error.errorType ==
-                  WebResourceErrorType.webContentProcessTerminated) {
-                _controller.reload();
-              }
-            },
-            javascriptChannels: <JavascriptChannel>[
-              JavascriptChannel(
-                  name: 'Messager',
-                  onMessageReceived: (JavascriptMessage javascriptMessage) {
-                    widget?.onMessage(javascriptMessage.message);
-                  }),
-            ].toSet(),
-            gestureRecognizers: getGestureRecognizers()));
+    return Container(
+      color: Colors.red,
+      child: Opacity(
+          opacity: _opacity,
+          // --- FIX_BLINK ---
+          child: WebView(
+              initialUrl: htmlBase64,
+              initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
+              javascriptMode: JavascriptMode.unrestricted,
+              onWebViewCreated: (WebViewController webViewController) {
+                print('hai');
+                print(webViewController);
+                _controller = webViewController;
+              },
+              onPageFinished: (String url) {
+                print(url);
+                // --- FIX_BLINK ---
+                if (Platform.isAndroid) {
+                  setState(() {
+                    _opacity = 1.0;
+                  });
+                }
+                // --- FIX_BLINK ---
+                init();
+              },
+              onWebResourceError: (error) {
+                print(error.errorCode);
+                if (error.errorType ==
+                    WebResourceErrorType.webContentProcessTerminated) {
+                  _controller.reload();
+                }
+              },
+              javascriptChannels: <JavascriptChannel>[
+                JavascriptChannel(
+                    name: 'Messager',
+                    onMessageReceived: (JavascriptMessage javascriptMessage) {
+                      widget?.onMessage(javascriptMessage.message);
+                    }),
+              ].toSet(),
+              gestureRecognizers: getGestureRecognizers())),
+    );
   }
 }
