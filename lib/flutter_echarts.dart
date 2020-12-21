@@ -60,8 +60,7 @@ class _EchartsState extends State<Echarts> {
   String _currentOption;
 
   // --- FIX_BLINK ---
-  // double _opacity = Platform.isAndroid ? 0.0 : 1.0;
-  double _opacity = 0.0;
+  double _opacity = Platform.isAndroid ? 0.0 : 1.0;
   // --- FIX_BLINK ---
 
   @override
@@ -163,11 +162,11 @@ class _EchartsState extends State<Echarts> {
             onPageFinished: (String url) {
               print(url);
               // --- FIX_BLINK ---
-              // if (Platform.isAndroid) {
-              setState(() {
-                _opacity = 1.0;
-              });
-              // }
+              if (Platform.isAndroid) {
+                setState(() {
+                  _opacity = 1.0;
+                });
+              }
               // --- FIX_BLINK ---
               init();
             },
