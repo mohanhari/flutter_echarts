@@ -159,7 +159,8 @@ class _EchartsState extends State<Echarts> {
               javascriptMode: JavascriptMode.unrestricted,
               onWebViewCreated: (WebViewController webViewController) {
                 print('hai');
-                print(webViewController);
+                print(webViewController.getScrollX());
+                print(webViewController.toString());
                 _controller = webViewController;
               },
               onPageFinished: (String url) {
