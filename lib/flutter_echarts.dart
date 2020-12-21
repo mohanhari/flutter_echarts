@@ -138,7 +138,7 @@ class _EchartsState extends State<Echarts> {
   @override
   void dispose() {
     if (Platform.isIOS) {
-      _controller.clearCache();
+      _controller?.clearCache();
     }
     super.dispose();
   }
@@ -154,6 +154,7 @@ class _EchartsState extends State<Echarts> {
             initialUrl: htmlBase64,
             javascriptMode: JavascriptMode.unrestricted,
             onWebViewCreated: (WebViewController webViewController) {
+              print('hai');
               _controller = webViewController;
             },
             onPageFinished: (String url) {
