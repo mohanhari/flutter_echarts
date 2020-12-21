@@ -71,21 +71,21 @@ class _EchartsState extends State<Echarts> {
   }
 
   void init() async {
-    final extensionsStr = this.widget.extensions.length > 0
-        ? this
-            .widget
-            .extensions
-            .reduce((value, element) => (value ?? '') + '\n' + (element ?? ''))
-        : '';
-    final themeStr =
-        this.widget.theme != null ? '\'${this.widget.theme}\'' : 'null';
-    await _controller?.evaluateJavascript('''
-      $echartsScript
-      $extensionsStr
-      var chart = echarts.init(document.getElementById('chart'), $themeStr);
-      ${this.widget.extraScript}
-      chart.setOption($_currentOption, true);
-    ''');
+    // final extensionsStr = this.widget.extensions.length > 0
+    //     ? this
+    //         .widget
+    //         .extensions
+    //         .reduce((value, element) => (value ?? '') + '\n' + (element ?? ''))
+    //     : '';
+    // final themeStr =
+    //     this.widget.theme != null ? '\'${this.widget.theme}\'' : 'null';
+    // await _controller?.evaluateJavascript('''
+    //   $echartsScript
+    //   $extensionsStr
+    //   var chart = echarts.init(document.getElementById('chart'), $themeStr);
+    //   ${this.widget.extraScript}
+    //   chart.setOption($_currentOption, true);
+    // ''');
     if (widget.onLoad != null) {
       widget.onLoad();
     }
@@ -154,7 +154,7 @@ class _EchartsState extends State<Echarts> {
           opacity: _opacity,
           // --- FIX_BLINK ---
           child: WebView(
-              initialUrl: htmlBase64,
+              initialUrl: 'https://github.com/',
               initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
               javascriptMode: JavascriptMode.unrestricted,
               onWebViewCreated: (WebViewController webViewController) {
