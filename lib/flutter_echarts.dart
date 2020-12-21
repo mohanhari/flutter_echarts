@@ -154,9 +154,23 @@ class _EchartsState extends State<Echarts> {
             initialUrl: htmlBase64,
             initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
             javascriptMode: JavascriptMode.unrestricted,
-            onWebViewCreated: (WebViewController webViewController) {
+            onWebViewCreated: (WebViewController webViewController) async {
               print('hai');
               _controller = webViewController;
+              final extensionsStr = this.widget.extensions.length > 0
+                  ? this.widget.extensions.reduce((value, element) =>
+                      (value ?? '') + '\n' + (element ?? ''))
+                  : '';
+              final themeStr = this.widget.theme != null
+                  ? '\'${this.widget.theme}\''
+                  : 'null';
+              await _controller.evaluateJavascript('''
+      $echartsScript
+      $extensionsStr
+      var chart = echarts.init(document.getElementById('chart'), $themeStr);
+      ${this.widget.extraScript}
+      chart.setOption($_currentOption, true);
+    ''');
             },
             onPageFinished: (String url) {
               print(url);
